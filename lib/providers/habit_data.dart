@@ -19,7 +19,13 @@ class HabitData with ChangeNotifier {
       },
     ),
   ];
-
+  void addHabit(Habit hbt){
+    _items.add(hbt);
+    notifyListeners();
+  }
+  int get getNumberOfHabits {
+    return _items.length;
+  }
   List<Habit> get items {
     return [..._items];
   }
@@ -39,7 +45,6 @@ class HabitData with ChangeNotifier {
         break;
       }
     }
-    print("data changed to $value");
     notifyListeners();
   }
 }

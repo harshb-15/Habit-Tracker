@@ -13,6 +13,7 @@ class ShowHabits extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Build called");
     // ********** Provider Data **********
     final data = Provider.of<HabitData>(context);
     final List<Habit> habitList = data.items;
@@ -45,6 +46,7 @@ class ShowHabits extends StatelessWidget {
     }
 
     Widget writeChecks(Habit hbt) {
+      print("WriteChecks called");
       Map<int, bool> temp = {};
       List<MyDate> dateList = dateMap.keys.toList();
       for (int i = 0; i < 5; i++) {
@@ -60,11 +62,12 @@ class ShowHabits extends StatelessWidget {
           children: temp2
               .map(
                 (int val) => GestureDetector(
-                    onLongPress: () {
-                      data.changeChecks(
-                          hbt.id, dateList[val], !temp[val]!);
-                    },
-                    child: Boxes(chid: temp[val] == true ? "✓" : "✗")),
+                  onLongPress: () {
+                    print("Clicked");
+                    data.changeChecks(hbt.id, dateList[val], !temp[val]!);
+                  },
+                  child: Boxes(chid: temp[val] == true ? "✓" : "✗"),
+                ),
               )
               .toList());
     }
@@ -82,7 +85,12 @@ class ShowHabits extends StatelessWidget {
                 (Habit hbt) => Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(hbt.name),
+                    Text(
+                      hbt.name,
+                      style: TextStyle(
+                        color: hbt.clr,
+                      ),
+                    ),
                     writeChecks(hbt),
                   ],
                 ),

@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/pages/create_habit.dart';
+import 'package:habit_tracker/providers/create_habit_data.dart';
 import 'package:habit_tracker/providers/habit_data.dart';
 import 'package:habit_tracker/widgets/show_habits.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  // Provider.debugCheckInvalidValueType = null;
   runApp(const MyApp());
 }
 
@@ -14,8 +16,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => HabitData(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<HabitData>(
+          create: (_) => HabitData(),
+        ),
+        ChangeNotifierProvider<CreateHabitData>(
+          create: (_) => CreateHabitData(),
+        ),
+      ],
       child: MaterialApp(
         title: '',
         initialRoute: '/',
@@ -44,7 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(CreateHabit().routeName);
+            },
             icon: Icon(Icons.add),
           ),
         ],
