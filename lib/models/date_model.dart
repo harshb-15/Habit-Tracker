@@ -11,7 +11,7 @@ class MyDate {
     required this.year,
     required this.weekDay,
   }) {
-    id = day.toString() + month.toString() + year.toString();
+    id = day.toString() + (month<=9 ? "0$month":month.toString()) + year.toString();
   }
 
   @override
@@ -24,4 +24,9 @@ class MyDate {
 
   @override
   int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    return "Day: $day, Month: $month, Year: $year, Id: $id";
+  }
 }

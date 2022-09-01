@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "504419813578",
+    "project_id": "habittracker-f2ecd",
+    "storage_bucket": "habittracker-f2ecd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504419813578:android:2904cba0ab23b648968c33",
+        "android_client_info": {
+          "package_name": "com.harsh.hbittrack.habit_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "504419813578-rqdcrqs2ngalm38q2ejkgi35vqtr0b9l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB_muoE0sjhbxALQrnRt8xMYPkm81_sVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "504419813578-rqdcrqs2ngalm38q2ejkgi35vqtr0b9l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

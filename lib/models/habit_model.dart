@@ -4,9 +4,8 @@ import 'package:habit_tracker/models/date_model.dart';
 class Habit {
   String name, question;
   Color clr;
-  Map<MyDate, bool> checks;
+  Map<String, bool> checks;
   int id;
-
   Habit({
     required this.id,
     required this.name,
@@ -14,6 +13,5 @@ class Habit {
     required this.clr,
     required this.checks,
   });
-
 
 }
