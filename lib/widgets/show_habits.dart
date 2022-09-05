@@ -17,10 +17,16 @@ class ShowHabits extends StatefulWidget {
 }
 
 class _ShowHabitsState extends State<ShowHabits> {
-  final nowTime = DateTime.now();
-  Map<String, String> dateMap = {};
+  @override
+  Widget build(BuildContext context) {
+    // ********** Provider Data **********
+    final data = Provider.of<HabitData>(
+      context,
+    );
+    //
+    final nowTime = DateTime.now();
+    Map<String, String> dateMap = {};
 
-  void calculateDates() {
     for (int i = 0; i < 5; i++) {
       DateTime tempNowTime = nowTime.subtract(Duration(days: i * 1));
       String tempMyDate = (tempNowTime.day <= 9
@@ -33,21 +39,7 @@ class _ShowHabitsState extends State<ShowHabits> {
       dateMap[tempMyDate] =
           "${DateFormat('EEEE').format(tempNowTime).substring(0, 3).toUpperCase()}\n${getDate(tempMyDate)}";
     }
-  }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    calculateDates();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // ********** Provider Data **********
-    final data = Provider.of<HabitData>(
-      context,
-    );
     List<Habit> habitList = data.items;
     List<Widget> showDateAndDay() {
       return dateMap.values
@@ -85,15 +77,6 @@ class _ShowHabitsState extends State<ShowHabits> {
               .map(
                 (int val) => GestureDetector(
                   onTap: () {
-                    const snackBar = SnackBar(
-                      content: Text("Press-and-hold to check or uncheck."),
-                      duration: Duration(
-                        seconds: 2,
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  },
-                  onLongPress: () {
                     data.invertChecks(hbt.id, dateList[val], temp[val]!);
                   },
                   child: Boxes(
@@ -108,47 +91,63 @@ class _ShowHabitsState extends State<ShowHabits> {
               .toList());
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 2,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 2,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: showDateAndDay(),
+            ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: showDateAndDay(),
-          ),
-        ),
-        ...habitList
-            .map(
-              (Habit hbt) => Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 2,
-                ),
-                color: const Color(0xff303030),
-                margin: const EdgeInsets.only(
-                  bottom: 5,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      hbt.name,
-                      style: TextStyle(
-                        color: hbt.clr,
-                        fontSize: 15,
+          ...habitList
+              .map(
+                (Habit hbt) => Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 2,
+                  ),
+                  color: const Color(0xff303030),
+                  margin: const EdgeInsets.only(
+                    bottom: 5,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          const snackBar = SnackBar(
+                            content: Text("Press-and-hold to delete"),
+                            duration: Duration(
+                              seconds: 2,
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        },
+                        onLongPress: () {
+                          data.deleteDatabase(hbt.id);
+                        },
+                        child: Text(
+                          hbt.name,
+                          style: TextStyle(
+                            color: hbt.clr,
+                            fontSize: 15,
+                          ),
+                        ),
                       ),
-                    ),
-                    writeChecks(hbt),
-                  ],
+                      writeChecks(hbt),
+                    ],
+                  ),
                 ),
-              ),
-            )
-            .toList(),
-      ],
+              )
+              .toList(),
+        ],
+      ),
     );
   }
 }

@@ -69,6 +69,7 @@ class HabitData with ChangeNotifier {
     db.collection('habits').add(habit);
   }
 
+
   Future<void> getDatabase() async {
     // print("getDatabase Called!");
     var snapShot = await db.collection('habits').get();
@@ -103,4 +104,17 @@ class HabitData with ChangeNotifier {
     );
     // print(_items[0].checks);
   }
+  Future<void> deleteDatabase(String identifier) async {
+    db.collection('habits').where('id', isEqualTo: identifier).get().then(
+          (event) {
+        event.docs.forEach((DocumentSnapshot documentSnapshot) async {
+          String id = documentSnapshot.id;
+          await db.collection('habits').doc(id).delete();
+        });
+      },
+    );
+    _items.removeWhere((Habit element) => element.id == identifier);
+    notifyListeners();
+  }
+
 }

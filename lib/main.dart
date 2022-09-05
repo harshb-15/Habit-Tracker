@@ -106,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 2), () {
+    Timer(Duration(seconds: 1), () {
       setState(() {});
     });
   }
