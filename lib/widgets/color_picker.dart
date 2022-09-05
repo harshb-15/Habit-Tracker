@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:habit_tracker/providers/create_habit_data.dart';
@@ -13,7 +14,7 @@ class ColorPick extends StatefulWidget {
 class _ColorPickState extends State<ColorPick> {
   @override
   Widget build(BuildContext context) {
-    final data = Provider.of<CreateHabitData>(context);
+    final data = Provider.of<CreateHabitData>(context,listen: false);
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -42,9 +43,17 @@ class _ColorPickState extends State<ColorPick> {
         );
       },
       child: Container(
-        width: 50,
-        height: 50,
-        color: data.clr,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          // border: Border.all(),
+          color: data.clr,
+        ),
+        width: 25,
+        height: 25,
+        // decoration: ,
+        // width: double.infinity,
+        // height: double.infinity,
+        // color: data.clr,
       ),
     );
   }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Boxes extends StatelessWidget {
-  String chid;
+  Widget chid;
+  // Widget child;
   Boxes({Key? key, required this.chid}) : super(key: key);
 
   @override
@@ -12,13 +13,7 @@ class Boxes extends StatelessWidget {
         horizontal: 7,
         vertical: 10,
       ),
-      child: Text(
-        chid,
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontSize: 12,
-        ),
-      ),
+      child: chid,
     );
   }
 }

@@ -1,18 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/pages/create_habit.dart';
+import 'package:habit_tracker/pages/loginPage.dart';
+import 'package:habit_tracker/pages/register_page.dart';
 import 'package:habit_tracker/providers/create_habit_data.dart';
 import 'package:habit_tracker/providers/habit_data.dart';
 import 'package:habit_tracker/widgets/show_habits.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:splashscreen/splashscreen.dart';
-
-import 'models/date_model.dart';
-import 'models/habit_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,11 +32,29 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          textTheme: TextTheme(
+            subtitle1: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color(0xff101010),
+            iconTheme: IconThemeData(
+              color: Color(0xffF0F0F0),
+            ),
+            actionsIconTheme: IconThemeData(
+              color: Color(0xffF0F0F0),
+            ),
+          ),
+        ),
         debugShowCheckedModeBanner: false,
         title: '',
         // initialRoute: '/splashScreen',
         home: Splash1(),
         routes: {
+          '/reg': (context) => RegisterPage(),
+          '/login': (context) => LoginPage(),
           '/splashScreen': (context) => Splash1(),
           '/home': (context) => MyHomePage(title: 'Habits'),
           CreateHabit().routeName: (context) => CreateHabit(),
@@ -63,7 +78,9 @@ class Splash1 extends StatelessWidget {
     }
     return SplashScreen(
       seconds: 3,
-      navigateAfterSeconds: MyHomePage(title: 'Habits'),
+      navigateAfterSeconds: MyHomePage(
+        title: 'Habit Tracker',
+      ),
       photoSize: 100.0,
       title: Text(
         "Loop Habit Tracker",
@@ -90,7 +107,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // TODO: implement initState
     super.initState();
     Timer(Duration(seconds: 2), () {
-      print("SetState called");
       setState(() {});
     });
   }
@@ -98,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff212121),
       appBar: AppBar(
         actions: [
           IconButton(
