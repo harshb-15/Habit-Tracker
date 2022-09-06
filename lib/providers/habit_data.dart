@@ -28,20 +28,15 @@ class HabitData with ChangeNotifier {
       }
     }
     updateDatabase(identifier, dt, false);
-    // notifyListeners();
   }
 
   void invertChecks(String identifier, String dt, bool value) {
-    // print("Long Pressed called");
     for (var i = 0; i < _items.length; i++) {
       if (_items[i].id == identifier) {
-        // print("Found");
         bool temp = !value;
         _items[i].checks[dt] = temp;
-        // print("Changed");
         break;
       } else {
-        // print("Not found!");
       }
     }
     updateDatabase(identifier, dt, !value);
@@ -55,10 +50,6 @@ class HabitData with ChangeNotifier {
   }
 
   void addDatabase(Habit hbt) {
-    // Map<String, bool> mapToAdd = {};
-    // hbt.checks.forEach((key, value) {
-    //   mapToAdd[key.id] = value;
-    // });
     Map<String, dynamic> habit = {
       "id": hbt.id,
       "name": hbt.name,
@@ -71,23 +62,17 @@ class HabitData with ChangeNotifier {
 
 
   Future<void> getDatabase() async {
-    // print("getDatabase Called!");
     var snapShot = await db.collection('habits').get();
     final listOfHabits = snapShot.docs.map((doc) => doc.data()).toList();
     for (var hbt in listOfHabits) {
       String question = hbt['question'], name = hbt['name'];
       String id = hbt['id'];
       Color clr = Color(hbt['clr']);
-      // Map<String, bool> tempMap = Map<String, bool>.from(hbt['checks']);
       Map<String, bool> checks = Map<String, bool>.from(hbt['checks']);
       Habit temp = Habit(
           id: id, name: name, question: question, clr: clr, checks: checks);
       _items.add(temp);
     }
-    // print(_items[0].checks);
-    // for(var idk in _items){
-    //   print(idk.checks)
-    // }
   }
 
   Future<void> updateDatabase(String identifier, String dt, bool value) async {
@@ -102,7 +87,24 @@ class HabitData with ChangeNotifier {
         });
       },
     );
-    // print(_items[0].checks);
+  }
+  Future<void> editDatabase(String identifier, Color c, String nm, String ques) async {
+    db.collection('habits').where('id', isEqualTo: identifier).get().then(
+          (event) {
+        event.docs.forEach((DocumentSnapshot documentSnapshot) async {
+          String id = documentSnapshot.id;
+          await db.collection('habits').doc(id).update({
+            "name": nm,
+            "question": ques,
+            "clr": c.value,
+          });
+        });
+      },
+    );
+    _items[_items.indexWhere((Habit element) => element.id==identifier)].name = nm;
+    _items[_items.indexWhere((Habit element) => element.id==identifier)].clr = c;
+    _items[_items.indexWhere((Habit element) => element.id==identifier)].question = ques;
+    notifyListeners();
   }
   Future<void> deleteDatabase(String identifier) async {
     db.collection('habits').where('id', isEqualTo: identifier).get().then(

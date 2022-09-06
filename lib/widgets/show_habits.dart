@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/constants.dart';
 import 'package:habit_tracker/models/habit_model.dart';
+import 'package:habit_tracker/pages/edit_page.dart';
 import 'package:habit_tracker/providers/habit_data.dart';
 import 'package:habit_tracker/widgets/boxes.dart';
 import 'package:intl/intl.dart';
@@ -121,13 +122,16 @@ class _ShowHabitsState extends State<ShowHabits> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          const snackBar = SnackBar(
-                            content: Text("Press-and-hold to delete"),
-                            duration: Duration(
-                              seconds: 2,
-                            ),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => EditPage(name: hbt.name, question: hbt.question, id: hbt.id, c: hbt.clr,),
+                          ));
+                          // const snackBar = SnackBar(
+                          //   content: Text("Press-and-hold to delete"),
+                          //   duration: Duration(
+                          //     seconds: 2,
+                          //   ),
+                          // );
+                          // ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
                         onLongPress: () {
                           data.deleteDatabase(hbt.id);

@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/pages/create_habit.dart';
+import 'package:habit_tracker/pages/edit_page.dart';
 import 'package:habit_tracker/pages/loginPage.dart';
 import 'package:habit_tracker/pages/register_page.dart';
 import 'package:habit_tracker/providers/create_habit_data.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         // initialRoute: '/splashScreen',
         home: Splash1(),
         routes: {
+          // '/edit': (context) => EditPage(),
           '/reg': (context) => RegisterPage(),
           '/login': (context) => LoginPage(),
           '/splashScreen': (context) => Splash1(),
@@ -85,9 +87,13 @@ class Splash1 extends StatelessWidget {
       title: Text(
         "Loop Habit Tracker",
         textScaleFactor: 2,
+        style: TextStyle(
+          color: Color(0xffF0F0F0),
+        ),
       ),
       image: Image.asset('assets/images/logo.png'),
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Color(0xff4C4C4C),
+      loaderColor: Color(0xffF0F0F0),
     );
   }
 }

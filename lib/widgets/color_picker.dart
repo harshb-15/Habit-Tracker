@@ -22,8 +22,13 @@ class _ColorPickState extends State<ColorPick> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
+              backgroundColor: Color(0xff424343),
               scrollable: true,
               content: ColorPicker(
+                labelTextStyle: const TextStyle(
+                  color: Color(0xffF0F0F0),
+                  fontSize: 15,
+                ),
                 pickerColor: data.clr,
                 onColorChanged: (Color color) {
                   data.setColor(color);
@@ -45,15 +50,10 @@ class _ColorPickState extends State<ColorPick> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
-          // border: Border.all(),
           color: data.clr,
         ),
         width: 25,
         height: 25,
-        // decoration: ,
-        // width: double.infinity,
-        // height: double.infinity,
-        // color: data.clr,
       ),
     );
   }
